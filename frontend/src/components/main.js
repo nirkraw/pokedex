@@ -97,11 +97,12 @@ export default class Main extends React.Component {
             <div className="third-container">
                   <div className="search-container">
                       <input 
+                      className="search-input"
                       placeholder="Search..."
                       value={this.state.searchValue}
                       onChange={this.update()}
                       />
-                      <button onClick={this.search}>Go!</button>
+                      <button className="search-button" onClick={this.search}>Go!</button>
                   </div>
               <div className="image-parent-container">
                 <div className="image-container">
