@@ -25,6 +25,11 @@
     justify-content: center;
 }
 
+.search-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .name, .weight, .height {
     text-transform: capitalize;
     font-family: sans-serif;
@@ -104,4 +109,9 @@
     height: 98px;
     width: 99px;
     cursor: pointer;
+}
+
+.error {
+    font-family: sans-serif;
+    font-size: 16px;
 }
