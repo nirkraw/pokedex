@@ -22,6 +22,8 @@ export default class Main extends React.Component {
     }
 
     componentDidMount() {
+      // compile a list of all pokemon and save them into an array
+      // store the first pokemon URL to show at first render
         axios.get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=807")
             .then(res => {
                 const pokemon = res.data.results;
@@ -31,6 +33,8 @@ export default class Main extends React.Component {
     }
 
     componentDidUpdate() {
+        //when changing pokemon update API get request to the new Url
+        //save their image, number, and other stats 
         axios.get(this.state.pokeUrl).then(res => {
             const currentPokemon = res.data;
             const pokeImg = res.data.sprites.front_default;
@@ -41,6 +45,7 @@ export default class Main extends React.Component {
 
 
     nextPokemon() {
+      // Change the pokemon URl by incrementing in our pokemon array. If on last pokemon switch back to first
         let currentPokeNum = this.state.currentPokeNum;
             if (currentPokeNum === 806) {
                 currentPokeNum = 0;
@@ -52,6 +57,7 @@ export default class Main extends React.Component {
     }
 
     previousPokemon() {
+       // Change the pokemon URl by decrementing in our pokemon array. If on first pokemon switch back to last
         let currentPokeNum = this.state.currentPokeNum;
         if (currentPokeNum === 0) {
             currentPokeNum = 806;
@@ -63,6 +69,7 @@ export default class Main extends React.Component {
     }
 
     update() {
+      // store any changes in the user input to have ready for search on completion 
          return (e) => {
            this.setState({
              searchValue: e.currentTarget.value,
@@ -71,18 +78,22 @@ export default class Main extends React.Component {
     }
     
     search() {
+      // iterates through our pokemon array in constant time and finds the searched pokemon, then switch the pokeUrl which
+      // will trigger the componentDidUpdate and change the pokemon appropriatley. Then clear the search. 
         let name = this.state.searchValue.toLowerCase();
         for (let i = 0; i < this.state.pokemon.length; i++) {
             const currentPoke = this.state.pokemon[i];
             if(currentPoke.name === name) {
                 this.setState({pokeUrl: currentPoke.url, searchValue: ""})
-                return null;
+                return null; //without this you would call the error message with a good search as well
             }
         }
+        // only call this method if no pokemon was found with the search
        this.errorMessage();
     }
 
     errorMessage() {
+      // if user inputs a non existing pokemon it will show the error in place of the pokemon stats for 3 seconds
         this.setState({errorMsg: true});
         setTimeout(() => {
               this.setState({ errorMsg: false });
